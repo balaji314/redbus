@@ -1,15 +1,12 @@
 # Stage 1: Build React app
-FROM node:16 AS build
+FROM node:18 AS build
 WORKDIR /app
 
-# Copy dependency files and install
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
-
-# Copy rest of the source code
 COPY . .
-
-# Build the app
 RUN npm run build
 
 # Stage 2: Serve with Nginx
